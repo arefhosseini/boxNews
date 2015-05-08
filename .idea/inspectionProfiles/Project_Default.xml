@@ -1,0 +1,38 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0" is_locked="false">
+    <option name="myName" value="Project Default" />
+    <option name="myLocal" value="false" />
+    <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myCustomPropertiesEnabled" value="true" />
+      <option name="myIgnoreVendorSpecificProperties" value="false" />
+      <option name="myCustomPropertiesList">
+        <value>
+          <list size="22">
+            <item index="0" class="java.lang.String" itemvalue="margin-left-rtl-source" />
+            <item index="1" class="java.lang.String" itemvalue="margin-left-ltr-source" />
+            <item index="2" class="java.lang.String" itemvalue="margin-left-value" />
+            <item index="3" class="java.lang.String" itemvalue="margin-right-value" />
+            <item index="4" class="java.lang.String" itemvalue="margin-right-ltr-source" />
+            <item index="5" class="java.lang.String" itemvalue="margin-right-rtl-source" />
+            <item index="6" class="java.lang.String" itemvalue="padding-right-value" />
+            <item index="7" class="java.lang.String" itemvalue="padding-left-value" />
+            <item index="8" class="java.lang.String" itemvalue="padding-left-ltr-source" />
+            <item index="9" class="java.lang.String" itemvalue="padding-left-rtl-source" />
+            <item index="10" class="java.lang.String" itemvalue="padding-right-ltr-source" />
+            <item index="11" class="java.lang.String" itemvalue="padding-right-rtl-source" />
+            <item index="12" class="java.lang.String" itemvalue="border-right-color-ltr-source" />
+            <item index="13" class="java.lang.String" itemvalue="border-right-color-rtl-source" />
+            <item index="14" class="java.lang.String" itemvalue="border-right-style-rtl-source" />
+            <item index="15" class="java.lang.String" itemvalue="border-right-style-ltr-source" />
+            <item index="16" class="java.lang.String" itemvalue="border-right-width-rtl-source" />
+            <item index="17" class="java.lang.String" itemvalue="border-right-width-ltr-source" />
+            <item index="18" class="java.lang.String" itemvalue="border-right-color-value" />
+            <item index="19" class="java.lang.String" itemvalue="border-right-style-value" />
+            <item index="20" class="java.lang.String" itemvalue="border-right-width-value" />
+            <item index="21" class="java.lang.String" itemvalue="-x-system-font" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
