@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="static/menuBar.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}"/>
+</head>
+<body>
+<div class="menu">
+    <header class="green">
+        <ul>
+            <li><a href="/">صفحه اصلی</a></li>
+            <li><a href="/varzesh">ورزش</a></li>
+            <li><a href="/music">آهنگ</a></li>
+            <li><a href="/movie">فیلم</a></li>
+            <li><a href="/game" class="active">بازی</a></li>
+            <li><a href="">ارتباط با ما</a></li>
+        </ul>
+    </header>
+</div>
+</body>
+</html>

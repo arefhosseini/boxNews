@@ -3,8 +3,21 @@
 <head>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'postTheme.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}"/>
 </head>
 <body>
+<div class="menu">
+    <header class="green">
+        <ul>
+            <li><a href="/">صفحه اصلی</a></li>
+            <li><a href="/varzesh" class="active">ورزش</a></li>
+            <li><a href="/music">آهنگ</a></li>
+            <li><a href="/movie">فیلم</a></li>
+            <li><a href="/game">بازی</a></li>
+            <li><a href="">ارتباط با ما</a></li>
+        </ul>
+    </header>
+</div>
 <div class="wrapper">
     <div class="mainContent">
         <div class="postBox">
@@ -32,7 +45,7 @@
                     </p>
                     <p style="text-align: center;"></p>
                     <div class="moreLink">
-                        <a href="/">
+                        <a href="/" target="_blank" class="action-button shadow animate">
                             ادامه مطلب
                         </a>
                         <span class="date">

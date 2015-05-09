@@ -1,0 +1,56 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:600);
+
+@font-face {
+    font-family: BYekan;
+    src: url(fonts/BYekan.woff);
+}
+
+body {
+	font-size: 76%;
+	font-family: 'Open Sans';
+}
+
+.menu header {
+	padding: 20px;
+	background: #444;
+	margin: 10px;
+}
+
+/* Different colors */
+header.blue { background: #40B9D5; }
+header.green { background: #8BD540; }
+header.red { background: #D5405E; }
+header.purple { background: #C140D5; }
+header.dblue { background: #4058D5; }
+header.orange { background: #D56640; }
+
+.menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.menu ul li {
+	float: right;
+	margin-right: 10px;
+}
+
+.menu ul a {
+    font-family: BYekan, tahoma, serif;
+	text-transform: uppercase;
+	color: #fff;
+	font-size: 14px;
+	padding: 10px 15px;
+	line-height: 18px;
+	text-decoration: none;
+	border-radius: 20px;
+	display: block;
+}
+
+.menu ul a:hover {
+	background: rgba(0,0,0,0.2);
+}
+.menu ul a:active, ul a.active {
+	background: rgba(0,0,0,0.3);
+}

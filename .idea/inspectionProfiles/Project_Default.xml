@@ -7,7 +7,7 @@
       <option name="myIgnoreVendorSpecificProperties" value="false" />
       <option name="myCustomPropertiesList">
         <value>
-          <list size="22">
+          <list size="32">
             <item index="0" class="java.lang.String" itemvalue="margin-left-rtl-source" />
             <item index="1" class="java.lang.String" itemvalue="margin-left-ltr-source" />
             <item index="2" class="java.lang.String" itemvalue="margin-left-value" />
@@ -30,6 +30,16 @@
             <item index="19" class="java.lang.String" itemvalue="border-right-style-value" />
             <item index="20" class="java.lang.String" itemvalue="border-right-width-value" />
             <item index="21" class="java.lang.String" itemvalue="-x-system-font" />
+            <item index="22" class="java.lang.String" itemvalue="border-left-width-ltr-source" />
+            <item index="23" class="java.lang.String" itemvalue="border-left-width-rtl-source" />
+            <item index="24" class="java.lang.String" itemvalue="border-left-width-value" />
+            <item index="25" class="java.lang.String" itemvalue="border-left-style-value" />
+            <item index="26" class="java.lang.String" itemvalue="border-left-style-ltr-source" />
+            <item index="27" class="java.lang.String" itemvalue="border-left-style-rtl-source" />
+            <item index="28" class="java.lang.String" itemvalue="border-top-image" />
+            <item index="29" class="java.lang.String" itemvalue="border-left-color-value" />
+            <item index="30" class="java.lang.String" itemvalue="border-left-color-ltr-source" />
+            <item index="31" class="java.lang.String" itemvalue="border-left-color-rtl-source" />
           </list>
         </value>
       </option>
