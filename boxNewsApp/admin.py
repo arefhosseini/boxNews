@@ -14,4 +14,4 @@ class PollAdmin(admin.ModelAdmin):
     ]
     inlines = [ChoiceInline]
 
-admin.site.register(Poll, PollAdmin) 
+admin.site.register(Poll, PollAdmin)

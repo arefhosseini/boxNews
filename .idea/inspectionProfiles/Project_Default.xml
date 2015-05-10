@@ -2,12 +2,13 @@
   <profile version="1.0" is_locked="false">
     <option name="myName" value="Project Default" />
     <option name="myLocal" value="false" />
+    <inspection_tool class="CssInvalidPropertyValue" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="CssUnknownProperty" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myCustomPropertiesEnabled" value="true" />
       <option name="myIgnoreVendorSpecificProperties" value="false" />
       <option name="myCustomPropertiesList">
         <value>
-          <list size="32">
+          <list size="34">
             <item index="0" class="java.lang.String" itemvalue="margin-left-rtl-source" />
             <item index="1" class="java.lang.String" itemvalue="margin-left-ltr-source" />
             <item index="2" class="java.lang.String" itemvalue="margin-left-value" />
@@ -40,9 +41,12 @@
             <item index="29" class="java.lang.String" itemvalue="border-left-color-value" />
             <item index="30" class="java.lang.String" itemvalue="border-left-color-ltr-source" />
             <item index="31" class="java.lang.String" itemvalue="border-left-color-rtl-source" />
+            <item index="32" class="java.lang.String" itemvalue="-ie-border-radius" />
+            <item index="33" class="java.lang.String" itemvalue="-ie-box-shadow" />
           </list>
         </value>
       </option>
     </inspection_tool>
+    <inspection_tool class="HtmlUnknownTarget" enabled="false" level="WARNING" enabled_by_default="false" />
   </profile>
 </component>

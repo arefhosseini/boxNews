@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^movie/$', 'boxNewsApp.views.movie'),
     url(r'^music/$', 'boxNewsApp.views.music'),
     url(r'^game/$', 'boxNewsApp.views.game'),
+    url(r'^signup/$', 'boxNewsApp.views.signup'),
     url(r'^admin/', include(admin.site.urls)),
+
 ]
