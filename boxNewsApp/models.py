@@ -1,4 +1,6 @@
+from captcha.fields import CaptchaField
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Poll(models.Model):
@@ -15,9 +17,8 @@ class Choice(models.Model):
 class Signup(models.Model):
     firstName = models.CharField(max_length=200)
     lastName = models.CharField(max_length=200)
-    userName = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
-    email = models.EmailField()
+    user = models.OneToOneField(User)
+    captcha = CaptchaField()
 
     def __str__(self):
         return u'%s %s %s %s %s' % (self.firstName, self.lastName, self.userName, self.password, self.email)

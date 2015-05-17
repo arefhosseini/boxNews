@@ -30,5 +30,10 @@ ul#menu li a:hover {
   <li><a href="/music" target="_blank">music</a></li>
   <li><a href="/game" target="_blank">game</a></li>
 </ul>
+{% if user.is_authenticated %}
+    <div class="form-inline">
+        <h1>Rango says... hello {{ user.username }}!</h1>
+    </div>
+{% endif %}
 </body>
 </html>

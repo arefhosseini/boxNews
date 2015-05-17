@@ -15,8 +15,15 @@
             <li><a href="/movie">فیلم</a></li>
             <li><a href="/game">بازی</a></li>
             <li><a href="">ارتباط با ما</a></li>
-            <li><a href="">ورود</a></li>
+            <li><a href="/login">ورود</a></li>
             <li><a href="/signup">ثبت نام</a></li>
+            {% if user.is_authenticated %}
+                <li><h1></h1></li>
+                <li><h1></h1></li>
+                <li><h1></h1></li>
+                <li><h1>عزیز خوش آمدید {{ user.username }}</h1></li>
+                <li><a href="/exituser">خروج</a></li>
+            {% endif %}
         </ul>
     </header>
 </div>
@@ -80,6 +87,48 @@
                     </div>
                 </div>
             </div>
+            <article class="post">
+                <div class="rightInfo">
+                    <figure class="postIconSport"></figure>
+                    <span class="views">3 نظر</span>
+                </div>
+                <div class="leftInfo">
+                    <header>
+                        <h2 style="text-align: center;">
+                            نظرات
+                        </h2>
+                    </header>
+                    <div class="comment-body">
+                        <p style="text-align: right;margin-right: 10px">
+                        نام کاربری
+                        </p>
+                        <p style="text-align: right;margin-right: 40px;margin-top: 30px;margin-left: 30px">
+                            نظر نظر نظر نظر
+                        </p>
+                    </div>
+                    <div class="comment-body">
+                        <p style="text-align: right;margin-right: 10px">
+                        نام کاربری
+                        </p>
+                        <p style="word-break: break-all;word-wrap: break-word;text-align: right;margin-right: 40px;margin-top: 30px;margin-left: 30px">
+                             aref aref aref aref aref aref aref aref aref aref aref aref arefaref
+                        </p>
+                    </div>
+                    <p style="color: rgb(255, 83, 70);font-size: 18px;font-family: BYekan, sans-serif;text-align: right;margin-right: 40px">
+                        نظر شما :
+                    </p>
+                    <textarea id="commentText" class="commentText" style="" placeholder="نظر خود را اینجا وارد کنید"></textarea>
+                        <button style="margin: 0 40px 10px 0;font-family: BYekan, sans-serif" class="action-button shadow animate">
+                            ارسال نظر
+                        </button>
+                        <p id="submitComment" class="successSentComment">
+                        نظر شما ارسال شد
+                        </p>
+                    <div class="pull-left"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </article>
         </div>
     </div>
 </div>

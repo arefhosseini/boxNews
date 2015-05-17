@@ -2,8 +2,158 @@
 <html>
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var d = document.getElementById("id_captcha_1");
+            d.className = "form-control";
+            $("#username").blur(function(){
+                $.post("/signup/",
+                {
+                    input: "username",
+                    value: (this).value
+                },
+                function(data, status)
+                {
+                    if (data == "valid" && status == "success")
+                    {
+                        $("#usernameDiv").removeClass("has-error").addClass("has-success");$("#usernameIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("usernameHelp").innerHTML = "";
+                        if ($(".has-success").length == 6)
+                        {
+                            $("#submit").removeClass("disabled").addClass("active")
+                        }
+                        else
+                        {
+                            $("#submit").removeClass("active").addClass("disabled")
+                        }
+                    }
+                    else if (data == "invalid" && status == "success")
+                    {
+                        $("#usernameDiv").removeClass("has-success").addClass("has-error");$("#usernameIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("usernameHelp").innerHTML = "نام کاربری تکراری است";
+                    }
+                });
+            });
+            $("#email").blur(function(){
+                $.post("/signup/",
+                {
+                    input: "email",
+                    value: (this).value
+                },
+                function(data, status)
+                {
+                    if (data == "valid" && status == "success")
+                    {
+                        $("#emailDiv").removeClass("has-error").addClass("has-success");$("#emailIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("emailHelp").innerHTML = "";
+                        if ($(".has-success").length == 6)
+                        {
+                            $("#submit").removeClass("disabled").addClass("active")
+                        }
+                        else
+                        {
+                            $("#submit").removeClass("active").addClass("disabled")
+                        }
+                    }
+                    else if (data == "invalid" && status == "success")
+                    {
+                        $("#emailDiv").removeClass("has-success").addClass("has-error");$("#emailIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("emailHelp").innerHTML = "ایمیل نامعتبر است";
+                    }
+                    else if (data == "repetitive" && status == "success")
+                    {
+                        $("#emailDiv").removeClass("has-success").addClass("has-error");$("#emailIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("emailHelp").innerHTML = "ایمیل تکراری است";
+                    }
+                });
+            });
+            $("#password").blur(function(){
+                var passValue = (this).value;
+                if (passValue.length < 8)
+                {
+                    $("#passDiv").removeClass("has-success").addClass("has-error");$("#passIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("passHelp").innerHTML = "رمز شما باید حداقل 8 کاراکتر باشد";
+                }
+                else
+                {
+                    $("#passDiv").removeClass("has-error").addClass("has-success");$("#passIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("passHelp").innerHTML = "";
+                    if ($(".has-success").length == 6)
+                    {
+                        $("#submit").removeClass("disabled").addClass("active")
+                    }
+                    else
+                    {
+                        $("#submit").removeClass("active").addClass("disabled")
+                    }
+                }
+            });
+            $("#re_password").blur(function(){
+                var re_passValue = (this).value;
+                var passValue = $("#password").val();
+                if (re_passValue != passValue && passValue != "")
+                {
+                    $("#re_passDiv").removeClass("has-success").addClass("has-error");$("#re_passIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("re_passHelp").innerHTML = "رمز شما مطابقت نمیکند";
+                }
+                else if (re_passValue == passValue)
+                {
+                    $("#re_passDiv").removeClass("has-error").addClass("has-success");$("#re_passIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("re_passHelp").innerHTML = "";
+                    if ($(".has-success").length == 6)
+                    {
+                        $("#submit").removeClass("disabled").addClass("active")
+                    }
+                    else
+                    {
+                        $("#submit").removeClass("active").addClass("disabled")
+                    }
+                }
+            });
+            $("#first_name").blur(function(){
+                var first_nameValue = (this).value;
+                if (first_nameValue == "")
+                {
+                    $("#first_nameDiv").removeClass("has-success").addClass("has-error");$("#first_nameIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("first_nameHelp").innerHTML = "پرکردن این فیلد الزامیست";
+                }
+                else
+                {
+                    $("#first_nameDiv").removeClass("has-error").addClass("has-success");$("#first_nameIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("first_nameHelp").innerHTML = "";
+                    if ($(".has-success").length == 6)
+                    {
+                        $("#submit").removeClass("disabled").addClass("active")
+                    }
+                    else
+                    {
+                        $("#submit").removeClass("active").addClass("disabled")
+                    }
+                }
+            });
+            $("#last_name").blur(function(){
+                var last_nameValue = (this).value;
+                if (last_nameValue == "")
+                {
+                    $("#last_nameDiv").removeClass("has-success").addClass("has-error");$("#last_nameIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("last_nameHelp").innerHTML = "پرکردن این فیلد الزامیست";
+                }
+                else
+                {
+                    $("#last_nameDiv").removeClass("has-error").addClass("has-success");$("#last_nameIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("last_nameHelp").innerHTML = "";
+                    if ($(".has-success").length == 6)
+                    {
+                        $("#submit").removeClass("disabled").addClass("active")
+                    }
+                    else
+                    {
+                        $("#submit").removeClass("active").addClass("disabled")
+                    }
+                }
+            });
+            $("#id_captcha_1").blur(function(){
+                if ($(".has-success").length == 6)
+                {
+                    $("#submit").removeClass("disabled").addClass("active")
+                }
+                else
+                {
+                    $("#submit").removeClass("active").addClass("disabled")
+                }
+            });
+        });
+    </script>
 </head>
 <body style="background-color: #f3f3f3">
 <div class="menu">
@@ -15,7 +165,7 @@
             <li><a href="/movie">فیلم</a></li>
             <li><a href="/game">بازی</a></li>
             <li><a href="">ارتباط با ما</a></li>
-            <li><a href="">ورود</a></li>
+            <li><a href="/login">ورود</a></li>
             <li><a href="/signup" class="active">ثبت نام</a></li>
         </ul>
     </header>
@@ -24,55 +174,81 @@
     <div class="container">
         <form class="form-horizontal" role="form" method="post" action="/signup/">
             {% csrf_token %}
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <div class="signup">
-                    <label class="control-label col-sm-2" for="firstName">: نام</label>
-                    <div class="col-sm-5" style="float: right;clear: left">
-                            <input type="text" align="right" class="form-control" id="firstName" name="firstName" placeholder="نام">
+                    <label class="control-label col-sm-2" for="first_name">: نام</label>
+                    <div class="col-sm-5" style="float: right;clear: left" id="first_nameDiv">
+                        <input type="text" align="right" class="form-control" id="first_name" value="{{ first_name }}" name="first_name" placeholder="نام">
+                        <span id="first_nameIco" class="glyphicon form-control-feedback"></span>
+                        <span id="first_nameHelp" class="help-block" style="text-align: right;font-family: BYekan, sans-serif;"></span>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <div class="signup">
-                    <label class="control-label col-sm-2" for="lastName">: نام خانوادگی</label>
-                    <div class="col-sm-5" style="float: right;clear: left">
-                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="نام خانوادگی">
+                    <label class="control-label col-sm-2" for="last_name">: نام خانوادگی</label>
+                    <div class="col-sm-5" style="float: right;clear: left" id="last_nameDiv">
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ last_name }}" placeholder="نام خانوادگی">
+                        <span id="last_nameIco" class="glyphicon form-control-feedback"></span>
+                        <span id="last_nameHelp" class="help-block" style="text-align: right;font-family: BYekan, sans-serif;"></span>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <div class="signup">
                     <label class="control-label col-sm-2" for="username">: نام کاربری</label>
-                    <div class="col-sm-5" style="float: right;clear: left">
-                        <input type="text" class="form-control" id="username" name="userName" placeholder="نام کاربری">
+                    <div class="col-sm-5" style="float: right;clear: left" id="usernameDiv">
+                        <input type="text" class="form-control" id="username" name="username" value="{{ username }}"  placeholder="نام کاربری">
+                        <span id="usernameIco" class="glyphicon form-control-feedback"></span>
+                        <span id="usernameHelp" class="help-block" style="text-align: right;font-family: BYekan, sans-serif;"></span>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <div class="signup">
                     <label class="control-label col-sm-2" for="pass">: رمز عبور</label>
-                    <div class="col-sm-5" style="float: right;clear: left">
-                        <input type="password" class="form-control" id="pass" name="password" placeholder="رمز عبور">
+                    <div class="col-sm-5" style="float: right;clear: left" id="passDiv">
+                        <input type="password" class="form-control" id="password" name="password" value="{{ password }}" placeholder="رمز عبور">
+                        <span id="passIco" class="glyphicon form-control-feedback"></span>
+                        <span id="passHelp" class="help-block" style="text-align: right;font-family: BYekan, sans-serif;"></span>
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group has-feedback">
                 <div class="signup">
                     <label class="control-label col-sm-2" for="re_pass">: تکرار رمز عبور</label>
-                    <div class="col-sm-5" style="float: right;clear: left">
-                        <input type="password" class="form-control" id="re_pass" name="re_password" placeholder="تکرار رمز عبور">
+                    <div class="col-sm-5" style="float: right;clear: left" id="re_passDiv">
+                        <input type="password" class="form-control" id="re_password" name="re_password" value="{{ re_password }}" placeholder="تکرار رمز عبور">
+                        <span id="re_passIco" class="glyphicon form-control-feedback"></span>
+                        <span id="re_passHelp" class="help-block" style="text-align: right;font-family: BYekan, sans-serif;"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <div class="signup">
+                    <label class="control-label col-sm-2" for="email">: ایمیل</label>
+                    <div class="col-sm-5" style="float: right;clear: left" id="emailDiv">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ email }}" placeholder="ایمیل">
+                        <span id="emailIco" class="glyphicon form-control-feedback"></span>
+                        <span id="emailHelp" class="help-block" style="text-align: right;font-family: BYekan, sans-serif;"></span>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="signup">
-                    <label class="control-label col-sm-2" for="email">: ایمیل</label>
-                    <div class="col-sm-5" style="float: right;clear: left">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="ایمیل">
+                    <label class="control-label col-sm-2" for="id_captcha_1">: تصویر امنیتی</label>
+                    <div class="col-sm-5 form-inline" style="float: right;clear: left">
+                        {{ form }}
+                        {% if isValid == 'invalid' %}
+                            <span class="help-block" style="color: #b4372f; text-align: right;font-family: BYekan, sans-serif;">تصویر امنیتی اشتباه است</span>
+                        {% endif %}
                     </div>
+                    <a href="/signup">
+                        <img class="refreshimg" src="{% static 'images/refreshCaptcha.png' %}" />
+                    </a>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">ثبت نام</button>
+            <button id="submit" type="submit" class="btn btn-success disabled" style="font-family: BYekan, sans-serif;float: right;margin-right: 30%">ثبت نام</button>
         </form>
     </div>
 </div>

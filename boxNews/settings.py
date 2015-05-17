@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'boxNewsApp',
+    'captcha'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body style="background-color: #f3f3f3">
+<div class="menu">
+    <header class="green">
+        <ul>
+            <li><a href="/">صفحه اصلی</a></li>
+            <li><a href="/varzesh">ورزش</a></li>
+            <li><a href="/music">آهنگ</a></li>
+            <li><a href="/movie">فیلم</a></li>
+            <li><a href="/game">بازی</a></li>
+            <li><a href="">ارتباط با ما</a></li>
+            <li><a href="/login">ورود</a></li>
+            <li><a href="/signup" class="active">ثبت نام</a></li>
+        </ul>
+    </header>
+</div>
+<div class="formSignup">
+    <div class="container">
+        <div class="form-horizontal">
+            <div class="form-group has-feedback">
+                <h3 style="text-align: right;font-family: BYekan, sans-serif;">ثبت نام شما با موفقیت انجام شد</h3>
+            </div>
+            <div class="form-group has-feedback">
+                <h4 style="text-align: right;font-family: BYekan, sans-serif;">: اطلاعات شما</h4>
+            </div>
+            <div class="form-group">
+                <label class="successLabel">: نام</label>
+                <label class="successLabel">{{ first_name }}</label>
+            </div>
+            <div class="form-group">
+                <label class="successLabel">: نام خانوادگی</label>
+                <label class="successLabel">{{ last_name }}</label>
+            </div>
+            <div class="form-group">
+                <label class="successLabel">: نام کاربری</label>
+                <label class="successLabel">{{ username }}</label>
+            </div>
+            <div class="form-group">
+                <label class="successLabel">برای ورود </label>
+                <label class="lastSuccessLabel"><a href="/login">اینجا</a></label>
+                <label class="lastSuccessLabel">را کلیک کنید</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" class="total-wrapper-footer">
+    <div class="footer-top">
+        <div class="footer-wrapper">
+            <div class="footer-column">
+                <a href="/">صفحه اصلی</a>
+                <a href="">درباره ما</a>
+                <a href="">تماس با ما</a>
+            </div>
+            <div class="footer-column">
+                <a href="/signup">ثبت نام</a>
+                <a href="">ورود</a>
+                <a href="/varzesh">ورزش</a>
+            </div>
+            <div class="footer-column">
+                <a href="/music">آهنگ</a>
+                <a href="/movie">فیلم</a>
+                <a href="/game">بازی</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
