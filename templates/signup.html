@@ -91,7 +91,7 @@
                 {
                     $("#re_passDiv").removeClass("has-success").addClass("has-error");$("#re_passIco").addClass("glyphicon-remove").removeClass("glyphicon-ok");document.getElementById("re_passHelp").innerHTML = "رمز شما مطابقت نمیکند";
                 }
-                else if (re_passValue == passValue)
+                else if (re_passValue == passValue && re_passValue != "")
                 {
                     $("#re_passDiv").removeClass("has-error").addClass("has-success");$("#re_passIco").addClass("glyphicon-ok").removeClass("glyphicon-remove");document.getElementById("re_passHelp").innerHTML = "";
                     if ($(".has-success").length == 6)
@@ -174,6 +174,11 @@
     <div class="container">
         <form class="form-horizontal" role="form" method="post" action="/signup/">
             {% csrf_token %}
+            <div class="form-group has-feedback">
+                <div class="signup">
+                    <label style="margin-right: 70px;font-family: BYekan, sans-serif;font-size: 14px;color: #ff5346;">برای فعال شدن دکمه ثبت نام ، سبز رنگ شدن همه فیلد ها الزامیست</label>
+                </div>
+            </div>
             <div class="form-group has-feedback">
                 <div class="signup">
                     <label class="control-label col-sm-2" for="first_name">: نام</label>

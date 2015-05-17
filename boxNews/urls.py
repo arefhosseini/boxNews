@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^login/$', 'boxNewsApp.views.login_user'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^exituser/', 'boxNewsApp.views.exituser'),
+    url(r'^sendComment/', 'boxNewsApp.views.sendComment')
 ]

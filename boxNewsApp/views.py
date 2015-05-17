@@ -3,7 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.template.context_processors import csrf
-from .forms import SignupForm, CaptchaForm, UserForm
+from .forms import SignupForm, CaptchaForm, UserForm, varzeshCommentForm
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .manageDB import controlDb
@@ -16,7 +16,13 @@ def home(request):
 
 
 def varzesh(request):
-    return render_to_response('varzesh.html', {'user': request.user})
+    mydb = controlDb()
+    cursor = mydb.db.cursor()
+    cursor.execute('''SELECT username, comment FROM boxNewsApp_varzeshcomment''')
+    comments = cursor.fetchall()
+    commentsNumbers = len(comments)
+    form = CaptchaForm()
+    return render_to_response('varzesh.html', {'form': form['captcha'], 'user': request.user, 'comments': comments, 'commentsNumbers': commentsNumbers})
 
 
 def movie(request):
@@ -35,7 +41,6 @@ def game(request):
 def signup(request):
     myDB = controlDb()
     if request.method == 'POST' and not request.is_ajax():
-        print(request.POST)
         formSignup = UserForm(request.POST)
         formCaptcha = CaptchaForm(request.POST)
         if formSignup.is_valid() and formCaptcha.is_valid():
@@ -46,7 +51,6 @@ def signup(request):
                     'username': request.POST['username']}
             return success(request, info)
         if not formCaptcha.is_valid():
-            print('captcha is not valid :D')
             form = CaptchaForm()
             context = {'form': form['captcha'], 'email': request.POST['email'], 'username': request.POST['username'],
                        'first_name': request.POST['first_name'], 'last_name': request.POST['last_name'],
@@ -54,7 +58,6 @@ def signup(request):
             return render(request, "signup.html", context)
     if request.is_ajax():
         cursor = myDB.db.cursor()
-        print(request.POST['input'])
         if request.POST['input'] == 'username':
             cursor.execute('''SELECT username FROM auth_user''')
             allusername = cursor.fetchall()
@@ -63,7 +66,8 @@ def signup(request):
                     return HttpResponse("invalid")
             return HttpResponse("valid")
         elif request.POST['input'] == 'email':
-            if "@" not in request.POST['value'] or ".com" not in request.POST['value'] and ".ir" not in request.POST['value']:
+            if "@" not in request.POST['value'] or ".com" not in request.POST['value'] and ".ir" not in request.POST[
+                'value']:
                 return HttpResponse("invalid")
             cursor.execute('''SELECT email FROM auth_user''')
             allEmail = cursor.fetchall()
@@ -94,7 +98,6 @@ def login_user(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        print(user, type(user))
         if user:
             if user.is_active:
                 login(request, user)
@@ -115,3 +118,19 @@ def success(request, info={}):
     if info == {}:
         return signup(request)
     return render(request, "success.html", info)
+
+
+@csrf_exempt
+def sendComment(request):
+    if request.method == 'POST':
+        formComment = varzeshCommentForm(request.POST)
+        formCaptcha = CaptchaForm(request.POST)
+        if formComment.is_valid() and formCaptcha.is_valid():
+            formComment.save()
+            return render(request, "sentComment.html", {'info': 'نظر شما با موفقیت ثبت شد'})
+        elif not formCaptcha.is_valid():
+            return render(request, "sentComment.html", {'info': 'تصویر امنیتی اشتباه است'})
+        else:
+            return home(request)
+    else:
+        return home(request)

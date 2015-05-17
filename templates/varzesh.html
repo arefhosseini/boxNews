@@ -4,6 +4,13 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'postTheme.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var d = document.getElementById("id_captcha_1");
+            d.className = "formCaptcha";
+        });
+    </script>
 </head>
 <body>
 <div class="menu">
@@ -71,7 +78,7 @@
                     <div id="wp_page_numbers">
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="" style="margin-left: 30%;font-size: 14px;color: #0e0e0e">
                                     صفحه قبل
                                 </a>
                             </li>
@@ -79,7 +86,7 @@
                                 page 1 of 10
                             </li>
                             <li>
-                                <a href="">
+                                <a href="" style="margin-right: 30%;font-size: 14px;color: #0e0e0e">
                                     صفحه بعد
                                 </a>
                             </li>
@@ -89,8 +96,8 @@
             </div>
             <article class="post">
                 <div class="rightInfo">
-                    <figure class="postIconSport"></figure>
-                    <span class="views">3 نظر</span>
+                    <figure class="postIconComment"></figure>
+                    <span class="views">{{ commentsNumbers }} نظر</span>
                 </div>
                 <div class="leftInfo">
                     <header>
@@ -98,32 +105,31 @@
                             نظرات
                         </h2>
                     </header>
-                    <div class="comment-body">
-                        <p style="text-align: right;margin-right: 10px">
-                        نام کاربری
-                        </p>
-                        <p style="text-align: right;margin-right: 40px;margin-top: 30px;margin-left: 30px">
-                            نظر نظر نظر نظر
-                        </p>
-                    </div>
-                    <div class="comment-body">
-                        <p style="text-align: right;margin-right: 10px">
-                        نام کاربری
-                        </p>
-                        <p style="word-break: break-all;word-wrap: break-word;text-align: right;margin-right: 40px;margin-top: 30px;margin-left: 30px">
-                             aref aref aref aref aref aref aref aref aref aref aref aref arefaref
-                        </p>
-                    </div>
-                    <p style="color: rgb(255, 83, 70);font-size: 18px;font-family: BYekan, sans-serif;text-align: right;margin-right: 40px">
+                    {% for comment in comments %}
+                        <div class="comment-body">
+                            <p style="text-align: right;margin-right: 10px">{{ comment.0 }}</p>
+                            <p style="text-align: right;margin-right: 40px;margin-top: 30px;margin-left: 30px">{{ comment.1 }}</p>
+                        </div>
+                    {% endfor %}
+                    {% if user.is_authenticated %}
+                        <p style="color: rgb(255, 83, 70);font-size: 18px;font-family: BYekan, sans-serif;text-align: right;margin-right: 40px">
                         نظر شما :
-                    </p>
-                    <textarea id="commentText" class="commentText" style="" placeholder="نظر خود را اینجا وارد کنید"></textarea>
-                        <button style="margin: 0 40px 10px 0;font-family: BYekan, sans-serif" class="action-button shadow animate">
-                            ارسال نظر
-                        </button>
-                        <p id="submitComment" class="successSentComment">
-                        نظر شما ارسال شد
                         </p>
+                        <form method="post" action="/sendComment/">
+                            {% csrf_token %}
+                            <textarea name="comment" id="commentText" class="commentText" style="" placeholder="نظر خود را اینجا وارد کنید"></textarea>
+                            <span style="float: right;margin-right:40px;font-family: BYekan, sans-serif;font-size: 14px">تصویر امنیتی :</span>
+                            {{ form }}
+                            </br>
+                            <button type="submit" id="submitComment" style="margin: 0 40px 10px 0;font-family: BYekan, sans-serif" class="action-button shadow animate">
+                            ارسال نظر
+                            </button>
+                            <p id="sentMessage" class="successSentComment"></p>
+                            <input name="username" type="hidden" value="{{ user.username }}" id="username">
+                        </form>
+                    {% else %}
+                        <p class="successSentComment">برای ارسال نظر باید وارد حساب خود شوید</p>
+                    {% endif %}
                     <div class="pull-left"></div>
                     <div class="clear"></div>
                 </div>

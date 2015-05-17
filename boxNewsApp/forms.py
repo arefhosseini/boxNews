@@ -1,7 +1,7 @@
 __author__ = 'A.Hosseini'
 
 from django import forms
-from .models import Signup
+from .models import Signup, varzeshComment
 from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 
@@ -15,7 +15,6 @@ class UserForm(forms.ModelForm):
 
 
 class SignupForm(forms.Form):
-
     class Meta:
         model = Signup
         fields = '__all__'
@@ -23,3 +22,9 @@ class SignupForm(forms.Form):
 
 class CaptchaForm(forms.Form):
     captcha = CaptchaField()
+
+
+class varzeshCommentForm(forms.ModelForm):
+    class Meta:
+        model = varzeshComment
+        fields = '__all__'

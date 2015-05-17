@@ -350,6 +350,25 @@ a, a:visited {
     width: 65px;
 }
 
+.postIconComment{
+    text-align: center;
+    background: transparent url("images/commentIcon.png") no-repeat scroll 0 0;
+    background-clip: border-box;
+    background-origin: padding-box;
+    background-size: auto auto;
+    height: 40px;
+    margin-top: 10px;
+    margin-right-value: auto;
+    margin-bottom: 10px;
+    margin-left-value: auto;
+    margin-left-ltr-source: physical;
+    margin-left-rtl-source: physical;
+    margin-right-ltr-source: physical;
+    margin-right-rtl-source: physical;
+    width: 65px;
+}
+
+
 .animate
 {
 	transition: all 0.1s;
@@ -414,11 +433,16 @@ a, a:visited {
     margin-right: 40px;
     margin-left: 40px;
     max-width: 85%;
+    min-width: 85%;
     width: 85%;
     height: 150px;
-    background-color: rgba(112, 255, 205, 0.26);
+    background-color: rgba(112, 255, 205, 0.11);
     border: 1px solid #B8B8B8;
     font-family: BYekan, sans-serif;
+}
+
+.commentText:focus {
+    border: 1px solid #15a6ca;
 }
 
 .successSentComment {
@@ -427,4 +451,17 @@ a, a:visited {
     color: rgb(61, 255, 47);
     text-align: center;
     margin-right: 50px;
+}
+
+.formCaptcha {
+    float: right;
+    margin-right: 50px;
+    margin-left: 50px;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #b7b7b7;
+    text-align: left;
+}
+.formCaptcha:focus{
+    border: 1px solid #15a6ca;
 }

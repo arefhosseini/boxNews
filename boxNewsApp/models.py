@@ -22,3 +22,11 @@ class Signup(models.Model):
 
     def __str__(self):
         return u'%s %s %s %s %s' % (self.firstName, self.lastName, self.userName, self.password, self.email)
+
+
+class varzeshComment(models.Model):
+    username = models.CharField(max_length=200)
+    comment = models.CharField(max_length=200)
+
+    def __str__(self):
+        return u'%s %s' % (self.username, self.comment)
