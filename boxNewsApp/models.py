@@ -14,6 +14,11 @@ class Choice(models.Model):
     votes = models.IntegerField()
 
 
+class Profile(models.Model):
+    username = models.CharField(max_length=200)
+    confirmation_code = models.CharField(max_length=32)
+
+
 class Signup(models.Model):
     firstName = models.CharField(max_length=200)
     lastName = models.CharField(max_length=200)
@@ -25,6 +30,30 @@ class Signup(models.Model):
 
 
 class varzeshComment(models.Model):
+    username = models.CharField(max_length=200)
+    comment = models.CharField(max_length=200)
+
+    def __str__(self):
+        return u'%s %s' % (self.username, self.comment)
+
+
+class gameComment(models.Model):
+    username = models.CharField(max_length=200)
+    comment = models.CharField(max_length=200)
+
+    def __str__(self):
+        return u'%s %s' % (self.username, self.comment)
+
+
+class musicComment(models.Model):
+    username = models.CharField(max_length=200)
+    comment = models.CharField(max_length=200)
+
+    def __str__(self):
+        return u'%s %s' % (self.username, self.comment)
+
+
+class movieComment(models.Model):
     username = models.CharField(max_length=200)
     comment = models.CharField(max_length=200)
 

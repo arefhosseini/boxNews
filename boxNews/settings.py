@@ -137,3 +137,9 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'boxnewsiust@gmail.com'
+EMAIL_HOST_PASSWORD = 'aref1441375'
+EMAIL_PORT = 587

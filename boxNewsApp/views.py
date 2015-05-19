@@ -1,40 +1,123 @@
-from django.contrib.auth.models import AnonymousUser
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.template.context_processors import csrf
-from .forms import SignupForm, CaptchaForm, UserForm, varzeshCommentForm
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from .manageDB import controlDb
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import random, string
+from django.contrib.auth.models import User
+from .forms import CaptchaForm, UserForm, varzeshCommentForm, gameCommentForm, movieCommentForm, musicCommentForm
+from .models import Profile
+from django.core.mail import send_mail
+from .manageDB import controlDb, controlData
 
 
 def home(request):
     return render_to_response('home.html', {'user': request.user})
 
 
-def varzesh(request):
+def varzesh(request, pageNumber):
     mydb = controlDb()
+    pageNumber = int(pageNumber)
     cursor = mydb.db.cursor()
     cursor.execute('''SELECT username, comment FROM boxNewsApp_varzeshcomment''')
     comments = cursor.fetchall()
     commentsNumbers = len(comments)
     form = CaptchaForm()
-    return render_to_response('varzesh.html', {'form': form['captcha'], 'user': request.user, 'comments': comments, 'commentsNumbers': commentsNumbers})
+    myData = controlData()
+    cursorData = myData.db.cursor()
+    cursorData.execute('''SELECT link, title, news, day, path FROM varzesh''')
+    posts = cursorData.fetchmany(10 * pageNumber)
+    posts = posts[(pageNumber - 1) * 10:]
+    cursorData.execute('''SELECT COUNT(*) FROM varzesh''')
+    allPages = cursorData.fetchone()[0]
+    allPages = allPages // 10 + 1
+    return render_to_response('varzesh.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
+                                               'commentsNumbers': commentsNumbers, 'posts': posts,
+                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
-def movie(request):
-    return render_to_response('movie.html', {'user': request.user})
+def movie(request, pageNumber):
+    mydb = controlDb()
+    pageNumber = int(pageNumber)
+    cursor = mydb.db.cursor()
+    cursor.execute('''SELECT username, comment FROM boxNewsApp_moviecomment''')
+    comments = cursor.fetchall()
+    commentsNumbers = len(comments)
+    form = CaptchaForm()
+    myData = controlData()
+    cursorData = myData.db.cursor()
+    cursorData.execute('''SELECT link, title, news, day, path FROM movie''')
+    posts = cursorData.fetchmany(10 * pageNumber)
+    posts = posts[(pageNumber - 1) * 10:]
+    cursorData.execute('''SELECT COUNT(*) FROM movie''')
+    allPages = cursorData.fetchone()[0]
+    allPages = allPages // 10 + 1
+    return render_to_response('movie.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
+                                               'commentsNumbers': commentsNumbers, 'posts': posts,
+                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
-def music(request):
-    return render_to_response('music.html', {'user': request.user})
+def music(request, pageNumber):
+    mydb = controlDb()
+    pageNumber = int(pageNumber)
+    cursor = mydb.db.cursor()
+    cursor.execute('''SELECT username, comment FROM boxNewsApp_musiccomment''')
+    comments = cursor.fetchall()
+    commentsNumbers = len(comments)
+    form = CaptchaForm()
+    myData = controlData()
+    cursorData = myData.db.cursor()
+    cursorData.execute('''SELECT link, title, news, day, path FROM music''')
+    posts = cursorData.fetchmany(10 * pageNumber)
+    posts = posts[(pageNumber - 1) * 10:]
+    cursorData.execute('''SELECT COUNT(*) FROM music''')
+    allPages = cursorData.fetchone()[0]
+    allPages = allPages // 10 + 1
+    return render_to_response('music.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
+                                               'commentsNumbers': commentsNumbers, 'posts': posts,
+                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
-def game(request):
-    return render_to_response('game.html', {'user': request.user})
+def game(request, pageNumber):
+    mydb = controlDb()
+    pageNumber = int(pageNumber)
+    cursor = mydb.db.cursor()
+    cursor.execute('''SELECT username, comment FROM boxNewsApp_gamecomment''')
+    comments = cursor.fetchall()
+    commentsNumbers = len(comments)
+    form = CaptchaForm()
+    myData = controlData()
+    cursorData = myData.db.cursor()
+    cursorData.execute('''SELECT link, title, news, day, path FROM game''')
+    posts = cursorData.fetchmany(10 * pageNumber)
+    posts = posts[(pageNumber - 1) * 10:]
+    cursorData.execute('''SELECT COUNT(*) FROM game''')
+    allPages = cursorData.fetchone()[0]
+    allPages = allPages // 10 + 1
+    return render_to_response('game.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
+                                               'commentsNumbers': commentsNumbers, 'posts': posts,
+                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
+
+
+def send_registration_confirmation(username, confirmation_code, email):
+    title = "boxNews account confirmation"
+    content = "http://127.0.0.1:8000/confirm/" + str(confirmation_code) + "/" + username
+    send_mail(title, content, 'boxnewsiust@gmail.com', [email], fail_silently=False)
+
+
+def confirm(request, confirmation_code, username):
+    try:
+        user = User.objects.get(username=username)
+        confirmation_code_user = Profile.objects.get(confirmation_code=confirmation_code).confirmation_code
+        if confirmation_code_user == confirmation_code:
+            user.is_active = True
+            user.save()
+            info = {'first_name': user.first_name, 'last_name': user.last_name, 'username': user.username}
+            return success(request, info)
+    except:
+        return home(request)
 
 
 @csrf_exempt
@@ -46,10 +129,13 @@ def signup(request):
         if formSignup.is_valid() and formCaptcha.is_valid():
             user = formSignup.save()
             user.set_password(user.password)
+            user.is_active = False
             user.save()
-            info = {'first_name': request.POST['first_name'], 'last_name': request.POST['last_name'],
-                    'username': request.POST['username']}
-            return success(request, info)
+            confirmation_code = ''.join(random.choice(string.ascii_letters) for i in range(32))
+            profile = Profile(username=request.POST['username'], confirmation_code=confirmation_code)
+            profile.save()
+            send_registration_confirmation(request.POST['username'], confirmation_code, request.POST['email'])
+            return render_to_response('toConfirmEmail.html')
         if not formCaptcha.is_valid():
             form = CaptchaForm()
             context = {'form': form['captcha'], 'email': request.POST['email'], 'username': request.POST['username'],
@@ -123,7 +209,14 @@ def success(request, info={}):
 @csrf_exempt
 def sendComment(request):
     if request.method == 'POST':
-        formComment = varzeshCommentForm(request.POST)
+        if request.POST['page'] == 'varzesh':
+            formComment = varzeshCommentForm(request.POST)
+        elif request.POST['page'] == 'game':
+            formComment = gameCommentForm(request.POST)
+        elif request.POST['page'] == 'music':
+            formComment = musicCommentForm(request.POST)
+        elif request.POST['page'] == 'movie':
+            formComment = movieCommentForm(request.POST)
         formCaptcha = CaptchaForm(request.POST)
         if formComment.is_valid() and formCaptcha.is_valid():
             formComment.save()
@@ -132,5 +225,14 @@ def sendComment(request):
             return render(request, "sentComment.html", {'info': 'تصویر امنیتی اشتباه است'})
         else:
             return home(request)
+    else:
+        return home(request)
+
+
+def profile(request):
+    if request.user.is_authenticated():
+        info = {'first_name': request.user.first_name, 'last_name': request.user.last_name,
+                'username': request.user.username, 'email': request.user.email}
+        return render(request, "profile.html", info)
     else:
         return home(request)

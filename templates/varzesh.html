@@ -17,10 +17,10 @@
     <header class="green">
         <ul>
             <li><a href="/">صفحه اصلی</a></li>
-            <li><a href="/varzesh" class="active">ورزش</a></li>
-            <li><a href="/music">آهنگ</a></li>
-            <li><a href="/movie">فیلم</a></li>
-            <li><a href="/game">بازی</a></li>
+            <li><a href="/varzesh/1" class="active">ورزش</a></li>
+            <li><a href="/music/1">آهنگ</a></li>
+            <li><a href="/movie/1">فیلم</a></li>
+            <li><a href="/game/1">بازی</a></li>
             <li><a href="">ارتباط با ما</a></li>
             <li><a href="/login">ورود</a></li>
             <li><a href="/signup">ثبت نام</a></li>
@@ -29,6 +29,7 @@
                 <li><h1></h1></li>
                 <li><h1></h1></li>
                 <li><h1>عزیز خوش آمدید {{ user.username }}</h1></li>
+                <li><a href="/profile">پروفایل</a></li>
                 <li><a href="/exituser">خروج</a></li>
             {% endif %}
         </ul>
@@ -37,6 +38,7 @@
 <div class="wrapper">
     <div class="mainContent">
         <div class="postBox">
+        {% for post in posts %}
             <article class="post">
                 <div class="rightInfo">
                     <figure class="postIconSport"></figure>
@@ -45,27 +47,27 @@
                 <div class="leftInfo">
                     <header>
                         <h2 style="text-align: center;">
-                            <a title="عنوان برای پست" rel="bookmark" href="/">عنوان برای پست</a>
+                            <a title="{% static post.4 %}" rel="bookmark" href="{{ post.0 }}">{{ post.1 }}</a>
                         </h2>
                     </header>
                     <p style="text-align: center">
-                        <img class="alignnone" width="400" height="299" alt="عنوان برای پست" src="{% static 'images/test.jpg' %}" title="عنوان برای پست" />
+                        <img class="alignnone" width="400" height="299" alt="{% static post.4 %}"  src="{% static post.4 %}" title="{% static post.4 %}"/>
                     </p>
                     <p style="text-align: center;">
-            ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان ریز مطلب واسه عنوان
+                        {{ post.2 }}
                     </p>
                     <p style="text-align: center;">
                         <span style="color: #0000ff;">
-                            برای دیدن کامل خبر به ادامه مطلب مراجعه کنید...
+                            برای دیدن کامل خبر به لینک خبر مراجعه کنید...
                         </span>
                     </p>
                     <p style="text-align: center;"></p>
                     <div class="moreLink">
-                        <a href="/" target="_blank" class="action-button shadow animate">
-                            ادامه مطلب
+                        <a href="{{ post.0 }}" target="_blank" class="action-button shadow animate">
+                            لینک خبر
                         </a>
                         <span class="date">
-                            تاریخ : ۱۷ام اردیبهشت, ۱۳۹۴
+                            تاریخ : {{ post.3 }}
                         </span>
                     </div>
                     <div class="pull-left"></div>
@@ -73,20 +75,23 @@
                 </div>
                 <div class="clear"></div>
             </article>
+        {% endfor %}
             <div class="lastForum">
                 <div class="define-post">
                     <div id="wp_page_numbers">
                         <ul>
-                            <li>
-                                <a href="" style="margin-left: 30%;font-size: 14px;color: #0e0e0e">
-                                    صفحه قبل
-                                </a>
-                            </li>
+                            {% if pageNumber != 1 %}
+                                <li>
+                                    <a href="/varzesh/{{ beforePage }}" style="margin-left: 30%;font-size: 14px;color: #0e0e0e">
+                                        صفحه قبل
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li class="pageInfo">
-                                page 1 of 10
+                                page {{ pageNumber }} of {{ allPages }}
                             </li>
                             <li>
-                                <a href="" style="margin-right: 30%;font-size: 14px;color: #0e0e0e">
+                                <a href="/varzesh/{{ nextPage }}" style="margin-right: 30%;font-size: 14px;color: #0e0e0e">
                                     صفحه بعد
                                 </a>
                             </li>
@@ -126,6 +131,7 @@
                             </button>
                             <p id="sentMessage" class="successSentComment"></p>
                             <input name="username" type="hidden" value="{{ user.username }}" id="username">
+                            <input name="page" type="hidden" value="varzesh">
                         </form>
                     {% else %}
                         <p class="successSentComment">برای ارسال نظر باید وارد حساب خود شوید</p>
@@ -149,12 +155,12 @@
             <div class="footer-column">
                 <a href="/signup">ثبت نام</a>
                 <a href="">ورود</a>
-                <a href="/varzesh">ورزش</a>
+                <a href="/varzesh/1">ورزش</a>
             </div>
             <div class="footer-column">
-                <a href="/music">آهنگ</a>
-                <a href="/movie">فیلم</a>
-                <a href="/game">بازی</a>
+                <a href="/music/1">آهنگ</a>
+                <a href="/movie/1">فیلم</a>
+                <a href="/game/1">بازی</a>
             </div>
         </div>
     </div>

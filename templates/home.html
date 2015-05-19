@@ -1,39 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-ul#menu {
-    padding: 50;
-}
-
-ul#menu li {
-    display: inline;
-}
-
-ul#menu li a {
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px 4px 0 0;
-}
-
-ul#menu li a:hover {
-    background-color: orange;
-}
-</style>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'slider/engine/style.css' %}" />
+    <script type="text/javascript" src="{% static 'slider/engine/jquery.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'postTheme.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}"/>
 </head>
 <body>
-<ul id="menu">
-  <li><a href="/varzesh" target="_blank">varzesh</a></li>
-  <li><a href="/movie" target="_blank">film</a></li>
-  <li><a href="/music" target="_blank">music</a></li>
-  <li><a href="/game" target="_blank">game</a></li>
-</ul>
-{% if user.is_authenticated %}
-    <div class="form-inline">
-        <h1>Rango says... hello {{ user.username }}!</h1>
+<div class="menu">
+    <header class="green">
+        <ul>
+            <li><a href="/" class="active">صفحه اصلی</a></li>
+            <li><a href="/varzesh/1">ورزش</a></li>
+            <li><a href="/music/1">آهنگ</a></li>
+            <li><a href="/movie/1">فیلم</a></li>
+            <li><a href="/game/1">بازی</a></li>
+            <li><a href="">ارتباط با ما</a></li>
+            <li><a href="/login">ورود</a></li>
+            <li><a href="/signup">ثبت نام</a></li>
+            {% if user.is_authenticated %}
+                <li><h1></h1></li>
+                <li><h1></h1></li>
+                <li><h1></h1></li>
+                <li><h1>عزیز خوش آمدید {{ user.username }}</h1></li>
+                <li><a href="/profile">پروفایل</a></li>
+                <li><a href="/exituser">خروج</a></li>
+            {% endif %}
+        </ul>
+    </header>
+</div>
+<div id="wowslider-container1">
+<div class="ws_images"><ul>
+		<li><a href="/varzesh/1"><img src="{% static 'slider/data/images/sportSlider.jpg' %}" alt="ورزش" title="برای مشاهده اخبار مربوط به ورزش به این صفحه مراجعه کنید" id="wows1_0"/></a></li>
+		<li><a href="/game/1"><img src="{% static 'slider/data/images/gameSlider.jpg' %}" alt="بازی" title="برای مشاهده اخبار مربوط به بازی به این صفحه مراجعه کنید" id="wows1_1"/></a></li>
+		<li><a href="/music/1"><img src="{% static 'slider/data/images/musicSlider.jpg' %}" alt="آهنگ" title="برای مشاهده اخبار مربوط به آهنگ به این صفحه مراجعه کنید" id="wows1_2"/></a></li>
+		<li><a href="/movie/1"><img src="{% static 'slider/data/images/movieSlider.jpg' %}" alt="فیلم" title="برای مشاهده اخبار مربوط به فیلم به این صفحه مراجعه کنید" id="wows1_3"/></a></li>
+	</ul></div>
+	<div class="ws_bullets"><div>
+		<a href="#" title="5"><span><img src="{% static 'slider/data/tooltips/sportSlider.jpg' %}" alt="ورزش"/>1</span></a>
+		<a href="#" title="14"><span><img src="{% static 'slider/data/tooltips/gameSlider.jpg' %}" alt="بازی"/>2</span></a>
+		<a href="#" title="33"><span><img src="{% static 'slider/data/tooltips/musicSlider.jpg' %}" alt="آهنگ"/>3</span></a>
+		<a href="#" title="55"><span><img src="{% static 'slider/data/tooltips/movieSlider.jpg' %}" alt="فیلم"/>4</span></a>
+	</div></div><div class="ws_script" style="position:absolute;left:-99%"><a href="http://wowslider.com">jquery slider free download</a> by WOWSlider.com v8.2</div>
+<div class="ws_shadow"></div>
+</div>
+<div id="footer" style="margin-top: 300px;" class="total-wrapper-footer">
+    <div class="footer-top">
+        <div class="footer-wrapper">
+            <div class="footer-column">
+                <a href="/">صفحه اصلی</a>
+                <a href="">درباره ما</a>
+                <a href="">تماس با ما</a>
+            </div>
+            <div class="footer-column">
+                <a href="/signup">ثبت نام</a>
+                <a href="">ورود</a>
+                <a href="/varzesh/1">ورزش</a>
+            </div>
+            <div class="footer-column">
+                <a href="/music/1">آهنگ</a>
+                <a href="/movie/1">فیلم</a>
+                <a href="/game/1">بازی</a>
+            </div>
+        </div>
     </div>
-{% endif %}
+</div>
+<script type="text/javascript" src="engine1/wowslider.js"></script>
+<script type="text/javascript" src="engine1/script.js"></script>
+<script type="text/javascript" src="{% static 'slider/engine/wowslider.js' %}"></script>
+<script type="text/javascript" src="{% static 'slider/engine/script.js' %}"></script>
 </body>
 </html>

@@ -4,16 +4,23 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'postTheme.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var d = document.getElementById("id_captcha_1");
+            d.className = "formCaptcha";
+        });
+    </script>
 </head>
 <body>
 <div class="menu">
     <header class="green">
         <ul>
             <li><a href="/">صفحه اصلی</a></li>
-            <li><a href="/varzesh">ورزش</a></li>
-            <li><a href="/music" class="active">آهنگ</a></li>
-            <li><a href="/movie">فیلم</a></li>
-            <li><a href="/game">بازی</a></li>
+            <li><a href="/varzesh/1">ورزش</a></li>
+            <li><a href="/music/1" class="active">آهنگ</a></li>
+            <li><a href="/movie/1">فیلم</a></li>
+            <li><a href="/game/1">بازی</a></li>
             <li><a href="">ارتباط با ما</a></li>
             <li><a href="/login">ورود</a></li>
             <li><a href="/signup">ثبت نام</a></li>
@@ -22,10 +29,120 @@
                 <li><h1></h1></li>
                 <li><h1></h1></li>
                 <li><h1>عزیز خوش آمدید {{ user.username }}</h1></li>
+                <li><a href="/profile">پروفایل</a></li>
                 <li><a href="/exituser">خروج</a></li>
             {% endif %}
         </ul>
     </header>
+</div>
+<div class="wrapper">
+    <div class="mainContent">
+        <div class="postBox">
+        {% for post in posts %}
+            <article class="post">
+                <div class="rightInfo">
+                    <figure class="postIconMusic"></figure>
+                    <span class="views">3 بازدید</span>
+                </div>
+                <div class="leftInfo">
+                    <header>
+                        <h2 style="text-align: center;">
+                            <a title="{% static post.4 %}" rel="bookmark" href="{{ post.0 }}">{{ post.1 }}</a>
+                        </h2>
+                    </header>
+                    <p style="text-align: center">
+                        <img class="alignnone" width="400" height="299" alt="{% static post.4 %}"  src="{% static post.4 %}" title="{% static post.4 %}"/>
+                    </p>
+                    <p style="text-align: center;">
+                        {{ post.2 }}
+                    </p>
+                    <p style="text-align: center;">
+                        <span style="color: #0000ff;">
+                            برای دیدن کامل خبر به لینک خبر مراجعه کنید...
+                        </span>
+                    </p>
+                    <p style="text-align: center;"></p>
+                    <div class="moreLink">
+                        <a href="{{ post.0 }}" target="_blank" class="action-button shadow animate">
+                            لینک خبر
+                        </a>
+                        <span class="date">
+                            تاریخ : {{ post.3 }}
+                        </span>
+                    </div>
+                    <div class="pull-left"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </article>
+        {% endfor %}
+            <div class="lastForum">
+                <div class="define-post">
+                    <div id="wp_page_numbers">
+                        <ul>
+                            {% if pageNumber != 1 %}
+                                <li>
+                                    <a href="/music/{{ beforePage }}" style="margin-left: 30%;font-size: 14px;color: #0e0e0e">
+                                        صفحه قبل
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li class="pageInfo">
+                                page {{ pageNumber }} of {{ allPages }}
+                            </li>
+                            <li>
+                                <a href="/music/{{ nextPage }}" style="margin-right: 30%;font-size: 14px;color: #0e0e0e">
+                                    صفحه بعد
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <article class="post">
+                <div class="rightInfo">
+                    <figure class="postIconComment"></figure>
+                    <span class="views">{{ commentsNumbers }} نظر</span>
+                </div>
+                <div class="leftInfo">
+                    <header>
+                        <h2 style="text-align: center;">
+                            نظرات
+                        </h2>
+                    </header>
+                    {% for comment in comments %}
+                        <div class="comment-body">
+                            <p style="text-align: right;margin-right: 10px">{{ comment.0 }}</p>
+                            <p style="text-align: right;margin-right: 40px;margin-top: 30px;margin-left: 30px">{{ comment.1 }}</p>
+                        </div>
+                    {% endfor %}
+                    {% if user.is_authenticated %}
+                        <p style="color: rgb(255, 83, 70);font-size: 18px;font-family: BYekan, sans-serif;text-align: right;margin-right: 40px">
+                        نظر شما :
+                        </p>
+                        <form method="post" action="/sendComment/">
+                            {% csrf_token %}
+                            <textarea name="comment" id="commentText" class="commentText" style="" placeholder="نظر خود را اینجا وارد کنید"></textarea>
+                            <span style="float: right;margin-right:40px;font-family: BYekan, sans-serif;font-size: 14px">تصویر امنیتی :</span>
+                            {{ form }}
+                            </br>
+                            <button type="submit" id="submitComment" style="margin: 0 40px 10px 0;font-family: BYekan, sans-serif" class="action-button shadow animate">
+                            ارسال نظر
+                            </button>
+                            <p id="sentMessage" class="successSentComment"></p>
+                            <input name="username" type="hidden" value="{{ user.username }}" id="username">
+                            <input name="page" type="hidden" value="game">
+                        </form>
+                    {% else %}
+                        <p class="successSentComment">برای ارسال نظر باید وارد حساب خود شوید</p>
+                    {% endif %}
+                    <div class="pull-left"></div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </article>
+        </div>
+    </div>
 </div>
 <div id="footer" class="total-wrapper-footer">
     <div class="footer-top">
@@ -38,12 +155,12 @@
             <div class="footer-column">
                 <a href="/signup">ثبت نام</a>
                 <a href="">ورود</a>
-                <a href="/varzesh">ورزش</a>
+                <a href="/varzesh/1">ورزش</a>
             </div>
             <div class="footer-column">
-                <a href="/music">آهنگ</a>
-                <a href="/movie">فیلم</a>
-                <a href="/game">بازی</a>
+                <a href="/music/1">آهنگ</a>
+                <a href="/movie/1">فیلم</a>
+                <a href="/game/1">بازی</a>
             </div>
         </div>
     </div>

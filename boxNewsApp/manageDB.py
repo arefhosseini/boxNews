@@ -11,4 +11,10 @@ class controlDb:
         self.db = sqlite3.connect(self.pathDb)
 
 
+class controlData:
+
+    def __init__(self):
+        self.pathDb = BASE_DIR + '\data.db'
+        self.db = sqlite3.connect(self.pathDb)
+
 
