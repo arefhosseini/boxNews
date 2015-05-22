@@ -27,7 +27,7 @@ def varzesh(request, pageNumber):
     form = CaptchaForm()
     myData = controlData()
     cursorData = myData.db.cursor()
-    cursorData.execute('''SELECT link, title, news, day, path FROM varzesh''')
+    cursorData.execute('''SELECT link, title, news, day, path FROM varzesh ORDER BY day DESC''')
     posts = cursorData.fetchmany(10 * pageNumber)
     posts = posts[(pageNumber - 1) * 10:]
     cursorData.execute('''SELECT COUNT(*) FROM varzesh''')
@@ -35,7 +35,8 @@ def varzesh(request, pageNumber):
     allPages = allPages // 10 + 1
     return render_to_response('varzesh.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
                                                'commentsNumbers': commentsNumbers, 'posts': posts,
-                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
+                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1),
+                                               'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
 def movie(request, pageNumber):
@@ -55,8 +56,9 @@ def movie(request, pageNumber):
     allPages = cursorData.fetchone()[0]
     allPages = allPages // 10 + 1
     return render_to_response('movie.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
-                                               'commentsNumbers': commentsNumbers, 'posts': posts,
-                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
+                                             'commentsNumbers': commentsNumbers, 'posts': posts,
+                                             'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1),
+                                             'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
 def music(request, pageNumber):
@@ -76,8 +78,9 @@ def music(request, pageNumber):
     allPages = cursorData.fetchone()[0]
     allPages = allPages // 10 + 1
     return render_to_response('music.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
-                                               'commentsNumbers': commentsNumbers, 'posts': posts,
-                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
+                                             'commentsNumbers': commentsNumbers, 'posts': posts,
+                                             'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1),
+                                             'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
 def game(request, pageNumber):
@@ -97,8 +100,9 @@ def game(request, pageNumber):
     allPages = cursorData.fetchone()[0]
     allPages = allPages // 10 + 1
     return render_to_response('game.html', {'form': form['captcha'], 'user': request.user, 'comments': comments,
-                                               'commentsNumbers': commentsNumbers, 'posts': posts,
-                                               'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1), 'beforePage': str(pageNumber - 1), 'allPages': allPages})
+                                            'commentsNumbers': commentsNumbers, 'posts': posts,
+                                            'pageNumber': pageNumber, 'nextPage': str(pageNumber + 1),
+                                            'beforePage': str(pageNumber - 1), 'allPages': allPages})
 
 
 def send_registration_confirmation(username, confirmation_code, email):
@@ -145,6 +149,8 @@ def signup(request):
     if request.is_ajax():
         cursor = myDB.db.cursor()
         if request.POST['input'] == 'username':
+            if request.POST['value'] == '':
+                return HttpResponse("invalid")
             cursor.execute('''SELECT username FROM auth_user''')
             allusername = cursor.fetchall()
             for username in allusername:
@@ -236,3 +242,24 @@ def profile(request):
         return render(request, "profile.html", info)
     else:
         return home(request)
+
+
+def forgotPass(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        try:
+            user = User.objects.get(email=email)
+            if user.is_active:
+                title = "boxNews account forgotten password"
+                username = user.username
+                newPassword = ''.join(random.choice(string.ascii_letters) for i in range(6))
+                content = "username : %s \n" % username + "password : %s" % newPassword
+                send_mail(title, content, 'boxnewsiust@gmail.com', [email], fail_silently=False)
+                user.set_password(newPassword)
+                user.save()
+                return render(request, "forgotPass.html", {'info': 'valid'})
+            else:
+                return render(request, "forgotPass.html", {'info': 'disabled'})
+        except:
+            return render(request, "forgotPass.html", {'info': 'invalid'})
+    return render(request, "forgotPass.html", {})

@@ -4,29 +4,6 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}" />
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>
-        /*$(document).ready(function(){
-            $("#submit").click(function(){
-                $.post("/login/",
-                {
-                    username: $("#username").value,
-                    password: $("#password").value
-                },
-                function(data, status)
-                {
-                    if (data == "valid" && status == "success")
-                    {
-                        alert("ok");
-                    }
-                    else if (data == "invalid" && status == "success")
-                    {
-                        alert("wrong");
-                    }
-                });
-            });
-        });*/
-    </script>
 </head>
 <body style="background-color: #f3f3f3">
 <div class="menu">
@@ -64,6 +41,11 @@
                 </div>
             </div>
             <div class="form-group has-feedback">
+                <div class="signup">
+                    <a href="/forgotPass"><label style="float: right;clear: left;font-family: BYekan, sans-serif;" class="col-sm-3">فراموشی رمز</label></a>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
                 <button id="submit" type="submit" class="btn btn-success" style="font-family: BYekan, sans-serif;float: right;margin-right: 30%">ورود</button>
                 {% if info == 'invalid'%}
                     <label class="errorLogin">نام کاربری یا رمز عبور اشتباه است</label>
@@ -85,7 +67,7 @@
             </div>
             <div class="footer-column">
                 <a href="/signup">ثبت نام</a>
-                <a href="">ورود</a>
+                <a href="/login">ورود</a>
                 <a href="/varzesh/1">ورزش</a>
             </div>
             <div class="footer-column">

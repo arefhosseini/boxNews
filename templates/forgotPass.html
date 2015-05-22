@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'menuBar.css' %}" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body style="background-color: #f3f3f3">
+<div class="menu">
+    <header class="green">
+        <ul>
+            <li><a href="/">صفحه اصلی</a></li>
+            <li><a href="/varzesh/1">ورزش</a></li>
+            <li><a href="/music/1">آهنگ</a></li>
+            <li><a href="/movie/1">فیلم</a></li>
+            <li><a href="/game/1">بازی</a></li>
+            <li><a href="">ارتباط با ما</a></li>
+            <li><a href="/login">ورود</a></li>
+            <li><a href="/signup">ثبت نام</a></li>
+        </ul>
+    </header>
+</div>
+<div class="formSignup">
+    <div class="container">
+        <form class="form-horizontal" role="form" method="post" action="/forgotPass/">
+            {% csrf_token %}
+            <div class="form-group has-feedback">
+                <div class="signup">
+                    <label class="control-label col-sm-2" for="username">: ایمیل</label>
+                    <div class="col-sm-5" style="float: right;clear: left" id="emailDiv">
+                        <input type="text" class="form-control" id="email" name="email"  placeholder="ایمیل">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group has-feedback">
+                <button id="submit" type="submit" class="btn btn-success" style="font-family: BYekan, sans-serif;float: right;margin-right: 30%">تایید</button>
+                {% if info == 'invalid'%}
+                    <label class="errorLogin">ایمیل شما پیدا نشد</label>
+                {% endif %}
+                {% if info == 'valid'%}
+                    <label class="errorLogin">نام کاربری و رمز عبور شما به ایمیلتان فرستاده شد</label>
+                {% endif %}
+                {% if info == 'disabled'%}
+                    <label class="errorLogin">حساب شما فعال نشده است،برای فعالسازی آن ایمیلی که برایتان فرستاده شده است را تایید کنید</label>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+<div id="footer" class="total-wrapper-footer">
+    <div class="footer-top">
+        <div class="footer-wrapper">
+            <div class="footer-column">
+                <a href="/">صفحه اصلی</a>
+                <a href="">درباره ما</a>
+                <a href="">تماس با ما</a>
+            </div>
+            <div class="footer-column">
+                <a href="/signup">ثبت نام</a>
+                <a href="/login">ورود</a>
+                <a href="/varzesh/1">ورزش</a>
+            </div>
+            <div class="footer-column">
+                <a href="/music/1">آهنگ</a>
+                <a href="/movie/1">فیلم</a>
+                <a href="/game/1">بازی</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
